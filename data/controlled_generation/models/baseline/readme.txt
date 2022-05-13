@@ -1,0 +1,1 @@
+model weights are here. A volume is forwarded to a docker container.

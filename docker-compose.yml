@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  da_bot:
+    build:
+      args:
+        PORT: 5000
+      dockerfile: ./Dockerfile
+      context: ./
+    ports:
+      - 5500:5000
+    volumes:
+      - ./data:/da_bot/data
+      - .:/da_bot
