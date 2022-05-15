@@ -19,10 +19,17 @@ EOS_TOKEN = "<|endoftext|>"
 
 def get_response(ctx: Context, actor: Actor, *args, **kwargs) -> Any:
     response = ""
+    history = ""
+    indices = list(ctx.responses)
+    for idx in indices:
+        history = f"{EOS_TOKEN}".join(
+            [history, ctx.requests[idx], ctx.responses[idx]])
+
     request = ctx.last_request
+    history = f"{EOS_TOKEN}".join([history, request])
     act_idx = random.randint(0, len(ACTS) - 1)
     data = {
-        "history": f"{request}{EOS_TOKEN}{ACTS[act_idx]}"
+        "history": f"{history}{EOS_TOKEN}{ACTS[act_idx]}"
     }
     j_data = json.dumps(data)
     r = requests.post(URL, data=j_data)
